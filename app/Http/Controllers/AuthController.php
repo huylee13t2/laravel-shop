@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use Socialite;
 
 class AuthController extends Controller
 {
@@ -23,6 +24,16 @@ class AuthController extends Controller
     		return redirect('/');
     	else
     		return view('auth.login', ['msg'=>'Login Error!']);
+    }
+
+    public function redirect()
+    {
+        return Socialite::driver('facebook')->redirect();   
+    }   
+
+    public function callback()
+    {
+        // when facebook call us a with token   
     }
 
     public function logout(){

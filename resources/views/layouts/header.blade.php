@@ -40,6 +40,9 @@
 								<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu" style="left: auto; right: 0; min-width: 100%;">
+								@if($profile->admin == 1)
+								<li><a href="admin"><i class="fa fa-user-circle-o" style="padding-right: 7px; float: left;"></i>Admin</a></li>
+								@endif
 								<li><a href="profile/{{$user->id}}"><i class="fa fa-user" style="padding-right: 7px; float: left;"></i>Profile</a></li>
 								<li><a href="logout"><i class="fa fa-sign-out" style="padding-right: 7px; float: left;"></i>Logout</a></li>
 							</ul>

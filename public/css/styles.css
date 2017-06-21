@@ -189,3 +189,27 @@ body{font-family: 'Rokkitt', serif;font-size: 18px;/* font-family: 'Shrikhand', 
 .frGroup > button{
 	text-align: center;
 }
+.td_ctn >p{
+	white-space: nowrap;
+	width: 310px !important;
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	border: none !important;
+	margin: 0;
+}
+.name >p{
+	white-space: nowrap;
+	width: 148px !important;
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	border: none !important;
+	margin: 0;
+}
+.list_product{
+	font-size: 16px;
+}
+.list_product > tbody{
+	
+}

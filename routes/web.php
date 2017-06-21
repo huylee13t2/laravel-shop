@@ -20,6 +20,24 @@ use App\AuthController;
 // home
 Route::get('/','HomeController@show');
 
+// admin
+Route::group(['prefix'=>'admin'], function(){
+
+	Route::get('/', 'AdminController@index');
+
+	Route::get('product/{id}/view', 'AdminController@view');
+
+	Route::get('product/{id}/edit', 'AdminController@edit');
+
+	Route::post('product/{id}/update', 'AdminController@update');
+
+	Route::get('product/add-new', 'AdminController@new');
+
+	Route::post('product/save', 'AdminController@save');
+
+	Route::get('product/{id}/delete', 'AdminController@delete');
+});
+
 // category
 Route::get('category/{id}', 'CategoryController@view');
 
@@ -102,6 +120,11 @@ Route::get('mail', function(){
 	});
 });
 
+// facebook
+Route::get('/redirect', 'AuthController@redirect');
+
+Route::get('/callback', 'AuthController@callback');
+
 // Route::get('database', function(){
 // 	Schema::create('likes_reply', function ($table) {
 // 		$table->increments('id');
@@ -119,3 +142,6 @@ Route::get('mail', function(){
 // 	});
 // 	echo "OK nhe!";
 // });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

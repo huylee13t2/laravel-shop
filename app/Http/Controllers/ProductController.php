@@ -38,9 +38,10 @@ class ProductController extends Controller{
 			$user = Auth::user();
 			$categories = CategoryModel::get();
 			$product = ProductModel::find($id);
-			$list = CategoryModel::all();			
+			$list = CategoryModel::all();		
+			$profile = ProfileModel::where('user_id', $user->id)->first();	
 
-			return view('product.edit', ['product'=>$product, 'categories'=>$categories, 'user'=>$user, 'list'=>$list]);
+			return view('product.edit', ['product'=>$product, 'categories'=>$categories, 'user'=>$user, 'list'=>$list, 'profile'=>$profile]);
 		} else{
 			return view('auth.login');
 		}
@@ -107,8 +108,9 @@ class ProductController extends Controller{
 			$user = Auth::user();
 			$categories = CategoryModel::get();
 			$list = CategoryModel::all();
+			$profile = ProfileModel::where('user_id', $user->id)->first();
 
-			return view('product.add', ['categories'=>$categories, 'user'=>$user, 'list'=>$list]);
+			return view('product.add', ['categories'=>$categories, 'user'=>$user, 'list'=>$list, 'profile'=>$profile]);
 		} else{
 			return view('auth.login');
 		}
@@ -180,8 +182,9 @@ class ProductController extends Controller{
 		$user = Auth::user();
 		$categories = CategoryModel::get();
 		$product = ProductModel::find($id);
+		$profile = ProfileModel::where('user_id', $user->id)->first();
 
-		return view('product.buy', ['categories'=>$categories, 'user'=>$user, 'product'=>$product]);
+		return view('product.buy', ['categories'=>$categories, 'user'=>$user, 'product'=>$product, 'profile'=>$profile]);
 	}
 
 	public function buy($id, Request $request){
@@ -192,17 +195,16 @@ class ProductController extends Controller{
 
 		$product = ProductModel::find($id);
 
-		// $content = 'Hi '.$product->name.'!\nYou buy product : '.$product->name.'\nPrice : '.$product->price.'\nAddress : '.$address.'\nThanks!';
-		// Mail::raw($content, function($message)
-		// {	
-		// 	$message->subject('Shop Online');
-		// 	$message->from('user123example@gmail.com', 'Shop Online - Huylee');
-		// 	$message->to('ledcuhuy13t2@gmail.com');
+		$content = 'Hi '.$product->name.'!\nYou buy product : '.$product->name.'\nPrice : '.$product->price.'\nAddress : '.$address.'\nThanks!';
 
-		// 	return 'buy!';
-		// });
+		$data = array('name'=>"Virat Gandhi");
+		Mail::send('mail', $data, function($message) {
+			$message->to('leduchuy13t2@gmail.com', 'Tutorials Point')->subject
+			('Laravel Basic Testing Mail');
+			$message->from('user123example@gmail.com','Virat Gandhi');
+		});
+		return "Basic Email Sent. Check your inbox.";
 
-		
 	}
 
 }

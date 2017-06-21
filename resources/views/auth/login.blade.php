@@ -45,6 +45,7 @@
 		<div class="container">
 			<div class="formLogin">
 				<h3>Login</h3>
+				<a href="redirect">FB Login</a>
 				<form class="form-inline" action="postLogin" method="post">
 					{{ csrf_field() }}
 					<div class="form-group frGroup">
