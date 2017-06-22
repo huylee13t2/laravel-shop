@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use Socialite;
+// use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\Controller;
+use App\Http\Requests;
+
+
 
 class AuthController extends Controller
 {
@@ -14,17 +19,18 @@ class AuthController extends Controller
     }
 
     public function login(Request $req){
-    	$username = $req['username'];
-    	$password = $req['password'];
+        $username = $req['username'];
+        $password = $req['password'];
 
-        
+        var_dump($username);
 
-    	// login
-    	if(Auth::attempt(['name'=>$username, 'password'=>$password]))
-    		return redirect('/');
-    	else
-    		return view('auth.login', ['msg'=>'Login Error!']);
+        // login
+        if(Auth::attempt(['name'=>$username, 'password'=>$password]))
+            return redirect('/');
+        else
+            return view('auth.login', ['msg'=>'Login Error!']);
     }
+
 
     public function redirect()
     {
@@ -34,32 +40,13 @@ class AuthController extends Controller
     public function callback()
     {
         // when facebook call us a with token   
+        $providerUser = \Socialite::driver('facebook')->user();
+        dd($providerUser);
     }
 
     public function logout(){
-    	Auth::logout();
-    	return view('auth.login');
-    }
-
-    public function viewRegister(){
-        return view('auth.register');
-    }
-
-    public function postRegister(Request $request){
-        $this->validate($request, 
-            ['name'=>'unique:users',], 
-            ['name.unique'=>'Name already exists!',]
-            );
-
-        $user = new User;
-
-        $user->name = $request->name;
-        $user->password = bcrypt($request->password);
-        $user->email = $request->email;
-
-        $user->save();
-
+        Auth::logout();
         return view('auth.login');
-        
     }
+
 }

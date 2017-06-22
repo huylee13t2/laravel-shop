@@ -122,8 +122,8 @@ Route::get('mail', function(){
 
 // facebook
 Route::get('/redirect', 'AuthController@redirect');
-
 Route::get('/callback', 'AuthController@callback');
+
 
 // Route::get('database', function(){
 // 	Schema::create('likes_reply', function ($table) {
