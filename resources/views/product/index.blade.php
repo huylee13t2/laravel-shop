@@ -34,7 +34,11 @@
 		<div class="media">
 			<div class="media-left">
 				<div class="avatar">
+					@if($profile->orther == 1)
+					<img class="media-object" src="{{$profile->avatar}}" alt="{{$profile->avatar}}">
+					@else
 					<img class="media-object" src="images/avatar/{{$profile->avatar}}" alt="{{$profile->avatar}}">
+					@endif
 				</div>
 			</div>
 			<div class="media-body hd_ctn_comment">
@@ -51,12 +55,16 @@
 		<div class="media sub_cmt">
 			<div class="media-left">
 				<div class="avatar">
+					@if($cmt->profile->orther == 1)
+					<img class="media-object" src="{{$cmt->profile->avatar}}">
+					@else
 					<img class="media-object" src="images/avatar/{{$cmt->profile->avatar}}">
+					@endif
 				</div>
 			</div>
 			<div class="media-body ctn_comment">
 				<h3 class="media-heading">
-					<a href="profile/{{$cmt->profile->user->id}}">{{$cmt->profile->user->name}}</a>
+					<a href="profile/{{$cmt->profile->user->id}}">{{$cmt->profile->full_name}}</a>
 					@if($user->id == $cmt->profile->user->id)
 					<a href="comment/{{ $cmt->id }}/delete" class="pull-right" style="font-size: 14px; cursor: pointer;"><i class="fa fa-remove"></i></a>
 					<a class="pull-right edit" style="font-size: 14px; margin-right: 10px; cursor: pointer;" data-toggle="collapse" data-target="#edit{{$cmt->id}}"><i class="fa fa-edit"></i></a>
@@ -96,12 +104,16 @@
 					<div class="media reply" style="overflow: visible;">
 						<div class="media-left">
 							<div class="avatar">
+								@if($rp->profile->orther == 1)
+								<img class="media-object" src="{{$rp->profile->avatar}}">
+								@else
 								<img class="media-object" src="images/avatar/{{$rp->profile->avatar}}">
+								@endif
 							</div>
 						</div>
 						<div class="media-body ctn_comment ctn_reply">
 							<h3 class="media-heading">
-								<a href="profile/{{$rp->profile->user->id}}">{{$rp->profile->user->name}}</a>
+								<a href="profile/{{$rp->profile->user->id}}">{{$rp->profile->full_name}}</a>
 								@if($user->id == $rp->profile->user->id)
 								<a href="reply/{{ $rp->id }}/delete" class="pull-right" style="font-size: 14px; cursor: pointer;"><i class="fa fa-remove"></i></a>
 								<a class="pull-right edit" style="font-size: 14px; margin-right: 10px; cursor: pointer;" data-toggle="collapse" data-target="#edit_reply{{$rp->id}}"><i class="fa fa-edit"></i></a>
@@ -143,7 +155,11 @@
 				<div class="media" style="margin-top: 0; margin-bottom: 15px; margin-top: 15px;">
 					<div class="media-left">
 						<div class="avatar">
+							@if($profile->orther == 1)
+							<img class="media-object" src="{{$profile->avatar}}" alt="{{$profile->avatar}}">
+							@else
 							<img class="media-object" src="images/avatar/{{$profile->avatar}}" alt="{{$profile->avatar}}">
+							@endif
 						</div>
 					</div>
 					<div class="media-body hd_ctn_comment">
