@@ -13,6 +13,7 @@ class HomeController extends Controller
 {
 	public function show(){
 		if (Auth::check()) {
+			// return 'Da login';
 			$user = Auth::user();
 			$products = ProductModel::get();
 			$profile = ProfileModel::where('user_id', $user->id)->first();
@@ -20,7 +21,6 @@ class HomeController extends Controller
 
 			return view('home.index',['products'=>$products,'categories'=>$categories, 'user'=> $user, 'profile'=>$profile]);
 		} else{
-
 			return view('auth.login');
 		}
 		

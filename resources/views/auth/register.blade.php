@@ -31,12 +31,6 @@
 					</button> 
 					<a href="/" class="navbar-brand" id="logo"><i class="fa fa-qq"></i>Shop Online</a> 
 				</div> 
-				{{-- <div class="navbar-collapse collapse navTopLeft" id="bs-example-navbar-collapse-9" aria-expanded="false" style="height: 1px;"> 
-					<ul class="nav navbar-nav" > 
-						<li class="active"><a href="/"><i class="fa fa-sign-in"></i>Login</a></li> 
-						<li class=""><a href="/"><i class="fa fa-sign-out"></i>Register</a></li> 
-					</ul> 
-				</div>  --}}
 			</div> 
 		</nav>
 	</div>
@@ -44,40 +38,44 @@
 	<div class="contentContainer">
 		<div class="container">
 			<div class="formLogin">
-				<h3>Login</h3>
-				{{-- <a href="auth/facebook">FB Login</a> --}}
-				<form class="form-inline" action="postLogin" method="post">
+				<h3>Register</h3>
+				<form class="form-inline" action="postRegister" method="post">
 					{{ csrf_field() }}
 					<div class="form-group frGroup">
-						{{-- @if($msg != null)
-						<div class="alert alert-danger name_alert">
-							<p class="name_error">
-								{{$msg}}
-							</p>
+						<div class="alert alert-danger name_alert" style="display: none;">
+							<p class="name_error"></p>
 						</div>
-						@endif --}}
-						<label class="sr-only" for="exampleInputAmount">Username</label>
+						@if(count($errors) > 0)
+						<div class="alert alert-danger">
+							@foreach($errors->all() as $err)
+							{{$err}}<br>
+							@endforeach
+						</div>
+						@endif
 						<div class="input-group inpFr">
 							<div class="input-group-addon"><i class="fa fa-user"></i></div>
-							<input type="text" class="form-control" name="username" id="username" placeholder="Username">
+							<input type="text" class="form-control" name="name" id="name" placeholder="Username" min="4" required="required">
 						</div>
 						<br>
-						<label class="sr-only" for="exampleInputAmount">Password</label>
 						<div class="input-group inpFr">
 							<div class="input-group-addon"><i class="fa fa-key"></i></div>
-							<input type="password" class="form-control" name="password" id="password" placeholder="Password">
+							<input type="password" class="form-control" name="password" id="password" placeholder="Password" min="6" required>
+						</div>
+						<br>
+						<div class="input-group inpFr">
+							<div class="input-group-addon"><i class="fa fa-history"></i></div>
+							<input type="password" class="form-control" name="re_password" id="re_password" placeholder="Re-Password" min="6" required>
+						</div>
+						<br>
+						<div class="input-group inpFr">
+							<div class="input-group-addon"><i class="fa fa-envelope-o"></i></div>
+							<input type="email" class="form-control" name="email" id="email" placeholder="Email">
 						</div>
 					</div>
 					<br>
-					<div class="form-group frGroup" style="text-align: center;">
-						<button type="submit" class="btn btn-primary">Login</button>
-						
-						<a href="register" style="display: block; margin-top: 5px;">Create new account</a>
-						<p style="margin: 10px 0; text-align: right;">
-							<a href="redirect" class="fa fa-facebook-square" style="font-size: 32px; text-decoration: none;"></a>
-							<a href="redirect/google" class="fa fa-google-plus-square" style="font-size: 32px; color: #e64921; text-decoration: none;"></a>
-							<a href="redirect/github" class="fa fa-github-square" style="font-size: 32px; color: #000; text-decoration: none;"></a>
-						</p>
+					<div class="form-group frGroup">
+						<button type="submit" class="btn btn-primary pull-left">Register</button>
+						<a href="login" class="btn btn-primary pull-right">Login</a>
 					</div>
 				</form>
 			</div>
@@ -92,7 +90,50 @@
 			</div>
 		</div>
 	</div>
-</body>
-</html>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#name').blur(function(){
+				var name = $('#name').val();
+				if(name.length <4){
+					$('.name_alert').css('display', 'block');
+					$('.name_error').text('Name is longer than 4 characters');
+				} else{
+					$('.name_alert').css('display', 'none');
+				}
+			});
+			$('#password').blur(function(){
+				var name = $('#password').val();
+				if(name.length < 6){
+					$('.name_alert').css('display', 'block');
+					$('.name_error').text('Password is longer than 6 characters');
+				}else{
+					$('.name_alert').css('display', 'none');
+				}
+			});
+			$('#re_password').blur(function(){
+				var name = $('#re_password').val();
+				if(name.length < 6){
+					$('.name_alert').css('display', 'block');
+					$('.name_error').text('Password is longer than 6 characters');
+				}else{
+					$('.name_alert').css('display', 'none');
+				}
+			});
+			$('#re_password').blur(function(){
+				var name = $('#re_password').val();
+				var password = $('#password').val();
+				if(name != password){
+					$('.name_alert').css('display', 'block');
+					$('.name_error').text('Re-Password error!');
+				} else{
+					$('.name_alert').css('display', 'none');
+				}
+			});
+			// $('.frGroup').on('blur', 'input', function(){
+			// 	console.log($(this).val());
+			// });
+		});
+	</script>
 </body>
 </html>

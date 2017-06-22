@@ -45,7 +45,11 @@
 			</div>
 		</div>
 		<div class="col-md-3 profile_left">
-			<img src="images/avatar/{{$profile->avatar}}" class="img-thumbnail">
+			@if($profile->orther == 1)
+				<img src="{{$profile->avatar}}" class="img-thumbnail" style="width: 200px; height: 200px;">
+			@else
+				<img src="images/avatar/{{$profile->avatar}}" class="img-thumbnail">
+			@endif
 			<div class="form-group">
 				<label>Change image</label>
 				<input class="form-control" type="file" name="file">

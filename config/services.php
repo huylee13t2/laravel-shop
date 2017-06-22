@@ -41,4 +41,16 @@ return [
         'redirect' => 'http://localhost:8000/callback',
     ],
 
+    'google' => [
+        'client_id' => '960948989095-0jhev8ivelb1g0n07l82vj3jup8d0683.apps.googleusercontent.com',
+        'client_secret' => 'fUu9uNqT5keVVEwwKn2DR97u',
+        'redirect' => 'http://localhost:8000/callback/google',
+    ],
+
+    'github'   => [
+        'client_id'     => '294486fc6bdd6b63e299',
+        'client_secret' => '8e5e984318b393acecaa932d462bde608a586672',
+        'redirect'      => 'http://localhost:8000/callback/github',
+    ],
+
 ];

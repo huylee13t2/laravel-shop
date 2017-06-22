@@ -123,6 +123,12 @@ Route::get('mail', function(){
 // facebook
 Route::get('/redirect', 'AuthController@redirect');
 Route::get('/callback', 'AuthController@callback');
+// google
+Route::get('/redirect/google', 'AuthController@redirectGoogle');
+Route::get('/callback/google', 'AuthController@callbackGoogle');
+// github
+Route::get('/redirect/github', 'AuthController@redirectGithub');
+Route::get('/callback/github', 'AuthController@callbackGithub');
 
 
 // Route::get('database', function(){

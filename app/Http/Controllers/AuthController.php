@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use Socialite;
-// use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\Contracts\User as ProviderUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
+use App\ProfileModel;
 
 
 class AuthController extends Controller
@@ -31,7 +32,89 @@ class AuthController extends Controller
             return view('auth.login', ['msg'=>'Login Error!']);
     }
 
+    // github
+    public function redirectGithub()
+    {
+        return Socialite::driver('github')->redirect();   
+    }   
 
+    public function callbackGithub(){
+        $providerUser = Socialite::driver('github')->user();
+
+        $id = $providerUser->getId();
+        $name = $providerUser->getName();
+        $email = $providerUser->getEmail();
+        $avatar = $providerUser->getAvatar();
+
+        $acount = User::where('name', $id)->orWhere('email', $email)->first();
+        if($acount == null){
+            // save account to table `users`
+
+            $user = new User;
+            $user->name = $id;
+            $user->password = bcrypt($id);
+            $user->email = $email;
+            $user->save();
+
+            // create account to table `profile`
+            $profile = new ProfileModel;
+            $profile->full_name = $name;
+            $profile->avatar = $avatar;
+            $profile->user_id = $user->id;
+            $profile->orther = 1;
+            $profile->save();
+
+        } 
+
+        // login
+        if(Auth::attempt(['name'=>$id, 'password'=>$id]))
+            return redirect('/');
+        else
+            return view('auth.login', ['msg'=>'Login Error!']);
+    }
+
+    // google
+    public function redirectGoogle()
+    {
+        return Socialite::driver('google')->redirect();   
+    }   
+
+    public function callbackGoogle(){
+        $providerUser = Socialite::driver('google')->user();
+        $id = $providerUser->getId();
+        $name = $providerUser->getName();
+        $email = $providerUser->getEmail();
+        $avatar = $providerUser->getAvatar();
+
+        $acount = User::where('name', $id)->orWhere('email', $email)->first();
+        if($acount == null){
+            // save account to table `users`
+
+            $user = new User;
+            $user->name = $id;
+            $user->password = bcrypt($id);
+            $user->email = $email;
+            $user->save();
+
+            // create account to table `profile`
+            $profile = new ProfileModel;
+            $profile->full_name = $name;
+            $profile->avatar = $avatar;
+            $profile->user_id = $user->id;
+            $profile->orther = 1;
+            $profile->save();
+
+        } 
+
+        // login
+        if(Auth::attempt(['name'=>$id, 'password'=>$id]))
+            return redirect('/');
+        else
+            return view('auth.login', ['msg'=>'Login Error!']);
+        
+    }
+
+    // facebook
     public function redirect()
     {
         return Socialite::driver('facebook')->redirect();   
@@ -41,7 +124,51 @@ class AuthController extends Controller
     {
         // when facebook call us a with token   
         $providerUser = \Socialite::driver('facebook')->user();
-        dd($providerUser);
+        $id = $providerUser->getId();
+        $getNickname = $providerUser->getNickname();
+        $name = $providerUser->getName();
+        $email = $providerUser->getEmail();
+        $avatar = $providerUser->getAvatar();
+        echo $id.'<hr>';
+        echo $getNickname.'<hr>';
+        echo $name.'<hr>';
+        echo $email.'<hr>';
+        echo $avatar.'<hr>';
+        // dd($providerUser);
+
+        $acount = User::where('name', $id)->orWhere('email', $email)->first();
+        // dd($acount);
+        if($acount == null){
+            // save account to table `users`
+
+            $user = new User;
+            $user->name = $id;
+            $user->password = bcrypt($id);
+            $user->email = $email;
+            $user->save();
+
+            // create account to table `profile`
+            $profile = new ProfileModel;
+            $profile->full_name = $name;
+            if($providerUser->user['gender'] == 'male'){
+                $profile->gender =  1;
+            } else{
+                $profile->gender =  0;
+            }
+            $profile->avatar = $avatar;
+            $profile->user_id = $user->id;
+            $profile->orther = 1;
+            $profile->admin = 0;
+            $profile->save();
+
+        } 
+
+        // login
+        if(Auth::attempt(['name'=>$id, 'password'=>$id]))
+            return redirect('/');
+        else
+            return view('auth.login', ['msg'=>'Login Error!']);
+
     }
 
     public function logout(){
@@ -49,4 +176,22 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
+    public function viewRegister(){
+        return view('auth.register');
+    }
+
+    public function postRegister(Request $request){
+        $this->validate($request, 
+            ['name'=>'unique:users',], 
+            ['name.unique'=>'Name already exists!',]
+            );
+        $user = new User;
+        $user->name = $request->name;
+        $user->password = bcrypt($request->password);
+        $user->email = $request->email;
+        $user->save();
+        return view('auth.login');
+        
+
+    }
 }

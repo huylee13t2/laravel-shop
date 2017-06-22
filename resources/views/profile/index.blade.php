@@ -20,7 +20,11 @@
 				</tr>
 				<tr>
 					<th>Birthday</th>
-					<td>{{ date('d/m/Y', strtotime($profile->birthday)) }}</td>
+					<td>
+						@if($profile->birthday != null)
+							{{ date('d/m/Y', strtotime($profile->birthday)) }}
+						@endif
+					</td>
 				</tr>
 				<tr>
 					<th>Gender</th>
@@ -36,7 +40,11 @@
 		</table>
 	</div>
 	<div class="col-md-3 profile_left">
-		<img src="images/avatar/{{$profile->avatar}}" class="img-thumbnail">
+		@if($profile->orther == 1)
+			<img src="{{$profile->avatar}}" class="img-thumbnail" style="width: 200px; height: 200px;">
+		@else
+			<img src="images/avatar/{{$profile->avatar}}" class="img-thumbnail">
+		@endif
 	</div>
 	<div class="form-group clear" style="overflow: hidden; padding: 0 15px;">
 		@if($user->id == $profile->user->id)

@@ -36,7 +36,7 @@
 					<ul class="nav navbar-nav" > 
 						<li class="active"><a href="/"><i class="fa fa-home"></i>Home</a></li> 
 						<li class="dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user"></i>{{$user->name}}
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user"></i>{{$profile->full_name}}
 								<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu" style="left: auto; right: 0; min-width: 100%;">
