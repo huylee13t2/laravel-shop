@@ -30,12 +30,36 @@ class LikeCommentController extends Controller
 
 				$like->save();
 
-				return redirect('product/'.$comment->product->id);
+				$count = LikeCommentModel::where('comment_id', $id)->count();
+
+				$arr = [
+					'result' => 1,
+					'data' => [
+						'count' => $count,
+					]
+				];
+
+				$response = json_encode($arr);
+
+				return $response;
+				// return redirect('product/'.$comment->product->id);
 			} else{
 				// dislike
     			$like->delete();
 
-    			return redirect('product/'.$comment->product->id);
+    			$count = LikeCommentModel::where('comment_id', $id)->count();
+
+    			$arr = [
+					'result' => 0,
+					'data' => [
+						'count' => $count,
+					]
+				];
+
+				$response = json_encode($arr);
+
+				return $response;
+    			// return redirect('product/'.$comment->product->id);
 			}
 		} else{
 			return view('auth.login');

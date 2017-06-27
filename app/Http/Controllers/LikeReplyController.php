@@ -32,12 +32,39 @@ class LikeReplyController extends Controller
 
 				$like->save();
 
+				$count = LikeReplyModel::where('reply_id', $id)->count();
+
+				$arr = [
+					'result' => 1,
+					'data' => [
+						'count' => $count,
+					]
+				];
+
+				$response = json_encode($arr);
+			
+				return $response;
 
 			} else{
 				$like->delete();
+
+				$count = LikeReplyModel::where('reply_id', $id)->count();
+
+    			$arr = [
+					'result' => 0,
+					'data' => [
+						'count' => $count,
+					]
+				];
+
+				$response = json_encode($arr);
+			
+				return $response;
+
 			}
 
-			return redirect('product/'.$reply->product->id);
+
+			// return redirect('product/'.$reply->product->id);
 		} else{
 			return view('auth.login');
 		}

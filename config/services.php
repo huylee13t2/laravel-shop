@@ -53,4 +53,11 @@ return [
         'redirect'      => 'http://localhost:8000/callback/github',
     ],
 
+    'twitter'   => [
+        'client_id'     => 'J3pryzEqxOFNNJz6IvYQkbxFx',
+        'client_secret' => 'pVByByw6aQzID3dnEVA6I2ti9oPs7VZ2n5inmp29G1R7A6GiNu',
+        'redirect'      => 'http://localhost:8000/callback/twitter',
+    ],
+
+    // http://localhost:8000/callback/twitter
 ];

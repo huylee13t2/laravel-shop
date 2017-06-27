@@ -32,6 +32,47 @@ class AuthController extends Controller
             return view('auth.login', ['msg'=>'Login Error!']);
     }
 
+    // redirectTwitter
+    public function redirectTwitter()
+    {
+        return Socialite::driver('twitter')->redirect();   
+    }   
+
+    public function callbackTwitter(){
+        $providerUser = Socialite::driver('twitter')->user();
+
+        $id = $providerUser->getId();
+        $name = $providerUser->getName();
+        $email = $providerUser->getEmail();
+        $avatar = $providerUser->getAvatar();
+
+        $acount = User::where('name', $id)->first();
+        if($acount == null){
+            // save account to table `users`
+
+            $user = new User;
+            $user->name = $id;
+            $user->password = bcrypt($id);
+            $user->email = $email;
+            $user->save();
+
+            // create account to table `profile`
+            $profile = new ProfileModel;
+            $profile->full_name = $name;
+            $profile->avatar = $avatar;
+            $profile->user_id = $user->id;
+            $profile->orther = 1;
+            $profile->save();
+
+        } 
+
+        // login
+        if(Auth::attempt(['name'=>$id, 'password'=>$id]))
+            return redirect('/');
+        else
+            return view('auth.login', ['msg'=>'Login Error!']);
+    }
+
     // github
     public function redirectGithub()
     {

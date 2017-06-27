@@ -130,6 +130,14 @@ Route::get('/callback/google', 'AuthController@callbackGoogle');
 Route::get('/redirect/github', 'AuthController@redirectGithub');
 Route::get('/callback/github', 'AuthController@callbackGithub');
 
+// twitter
+Route::get('/redirect/twitter', 'AuthController@redirectTwitter');
+Route::get('/callback/twitter', 'AuthController@callbackTwitter');
+
+Route::get('share', function(){
+	return Share::load('http://www.example.com', 'Link description')->services('facebook');
+});
+
 
 // Route::get('database', function(){
 // 	Schema::create('likes_reply', function ($table) {

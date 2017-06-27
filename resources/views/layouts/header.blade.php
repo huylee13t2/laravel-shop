@@ -36,7 +36,14 @@
 					<ul class="nav navbar-nav" > 
 						<li class="active"><a href="/"><i class="fa fa-home"></i>Home</a></li> 
 						<li class="dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user"></i>{{$profile->full_name}}
+							<div class="hd_avatar">
+								@if($profile->orther == 1)
+								<img src="{{$profile->avatar}}">
+								@else
+								<img src="images/avatar/{{$profile->avatar}}">
+								@endif
+							</div>
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">{{$profile->full_name}}
 								<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu" style="left: auto; right: 0; min-width: 100%;">

@@ -179,6 +179,7 @@ return [
 
         Laravel\Socialite\SocialiteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Chencha\Share\ShareServiceProvider::class,
     ],
 
     /*
@@ -230,6 +231,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
 
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Share' => Chencha\Share\ShareFacade::class,
         
     ],
 

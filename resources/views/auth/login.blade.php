@@ -77,6 +77,7 @@
 							<a href="redirect" class="fa fa-facebook-square" style="font-size: 32px; text-decoration: none;"></a>
 							<a href="redirect/google" class="fa fa-google-plus-square" style="font-size: 32px; color: #e64921; text-decoration: none;"></a>
 							<a href="redirect/github" class="fa fa-github-square" style="font-size: 32px; color: #000; text-decoration: none;"></a>
+							<a href="redirect/twitter" class="fa fa-twitter-square" style="font-size: 32px; color: #03A9F4; text-decoration: none;"></a>
 						</p>
 					</div>
 				</form>

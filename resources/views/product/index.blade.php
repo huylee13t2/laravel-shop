@@ -73,14 +73,14 @@
 				<p class="ctn_cmt">{{ $cmt->content }}</p>
 				<div class="action">
 					<div class="dropdown view_like">
-						<a class="dropdown-toggle"  data-toggle="dropdown">{{ $cmt->likecomment->count() }}</a>
-						<ul class="dropdown-menu">
+						<a class="dropdown-toggle"  data-toggle="dropdown" id="count{{$cmt->id}}">{{ $cmt->likecomment->count() }}</a>
+						{{-- <ul class="dropdown-menu">
 							@foreach($cmt->likecomment as $like)
 							<li><a href="profile/{{$like->user->id}}">{{ $like->user->name }}</a></li>
 							@endforeach
-						</ul>
+						</ul> --}}
 					</div>
-					<a href="comment/{{$cmt->id}}/like" 
+					<a class="pro_ctm {{$cmt->id}}" id="{{$cmt->id}}" 
 						@foreach($cmt->likecomment as $like)
 						@if($like->user->id == $user->id)
 						style="color: #f34bb5;"
@@ -88,7 +88,15 @@
 						@endforeach
 						><i class="fa fa-heart"></i>
 					</a>
-					<a href="#"><i class="fa fa-share-square-o"></i></a>
+					{{-- <a href="comment/{{$cmt->id}}/like" 
+						@foreach($cmt->likecomment as $like)
+						@if($like->user->id == $user->id)
+						style="color: #f34bb5;"
+						@endif
+						@endforeach
+						><i class="fa fa-heart"></i>
+					</a> --}}
+					{{-- <a href="#"><i class="fa fa-share-square-o"></i></a> --}}
 				</div>
 				<div id="edit{{$cmt->id}}" class="collapse">
 					<div class="edit_cmt">
@@ -123,14 +131,14 @@
 							<div class="action">
 								{{-- <a href="reply/{{$rp->id}}/like"><i class="fa fa-heart"></i></a> --}}
 								<div class="dropdown view_like">
-								<a class="dropdown-toggle"  data-toggle="dropdown">{{ $rp->like_reply->count() }}</a>
-									<ul class="dropdown-menu">
+									<a class="dropdown-toggle"  data-toggle="dropdown" id="rp_count_{{$rp->id}}">{{ $rp->like_reply->count() }}</a>
+									{{-- <ul class="dropdown-menu">
 										@foreach($rp->like_reply as $like)
 										<li><a href="profile/{{$like->user->id}}">{{ $like->user->name }}</a></li>
 										@endforeach
-									</ul>
+									</ul> --}}
 								</div>
-								<a href="reply/{{$rp->id}}/like" 
+								<a  class="pro_rep" id="{{$rp->id}}" 
 									@foreach($rp->like_reply as $like)
 									@if($like->user->id == $user->id)
 									style="color: #f34bb5;"
@@ -138,6 +146,14 @@
 									@endforeach
 									><i class="fa fa-heart"></i>
 								</a>
+								{{-- <a href="reply/{{$rp->id}}/like" 
+									@foreach($rp->like_reply as $like)
+									@if($like->user->id == $user->id)
+									style="color: #f34bb5;"
+									@endif
+									@endforeach
+									><i class="fa fa-heart"></i>
+								</a> --}}
 							</div>
 							<div id="edit_reply{{$rp->id}}" class="collapse">
 								<div class="edit_cmt">
@@ -190,7 +206,63 @@
 			}
 			console.log($(this).parent().parent().find('.ctn_cmt').length);
 		});
+
+		$('.comment_content').on('click', '.pro_ctm', function(){
+			$id = $(this).attr('id');
+			$.ajax({
+				url : 'comment/'+ $id + '/like', 
+				type : "get", 
+				dateType:"text",  
+				data : {
+					// number : $('#number').val()
+				},
+				success : function (data){
+					console.log(data);
+					var obj = JSON.parse(data);
+					console.log(obj);
+					console.log(obj['data']['count']);
+
+
+					if(obj['result'] == 0 ){
+						console.log(' = 0')
+						console.log($id)
+						$("#"+$id).css('color', '#337ab7');
+						$('#count'+$id).text(obj['data']['count']);
+					} else if(obj['result'] > 0){
+						$("#"+$id).css('color', '#f34bb5');
+						$('#count'+$id).text(obj['data']['count']);
+					}
+				}
+			});
+		});
+
+		$('.comment_content').on('click', '.pro_rep', function(){
+			$id = $(this).attr('id');
+			$.ajax({
+				url : 'reply/'+$id+'/like', 
+				type : "get", 
+				dateType:"text",  
+				data : {
+					// number : $('#number').val()
+				},
+				success : function (data){
+					var obj = JSON.parse(data);
+
+					if(obj['result'] == 0 ){
+						console.log(' = 0')
+						console.log($id)
+						$("#"+$id).css('color', '#337ab7');
+						$('#rp_count_'+$id).text(obj['data']['count']);
+					} else if(obj['result'] > 0){
+						$("#"+$id).css('color', '#f34bb5');
+						$('#rp_count_'+$id).text(obj['data']['count']);
+					}
+				}
+			});
+		});
+
 	});
+
 </script>
 
 @endsection
